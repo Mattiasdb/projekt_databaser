@@ -44,8 +44,9 @@ CREATE TABLE Booking (
     FOREIGN KEY (GuestID) REFERENCES Guest(GuestID),
     FOREIGN KEY (RoomID) REFERENCES Room(RoomID)
     );
-    
--- Lägg till en constraint i tabellen Booking
+/*
+Lägg till en constraint i tabellen Booking
+*/
 ALTER TABLE Booking
 ADD CONSTRAINT check_min_one_night
 CHECK (CheckoutDate > CheckinDate); -- Utcheckning ska vara större än incheckning 
