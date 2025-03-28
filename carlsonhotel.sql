@@ -61,7 +61,7 @@ CREATE TABLE PayMethod (
 Skapar tabellen Payment
 */
 CREATE TABLE Payment (
-	PaymentID INT PRIMARY KEY AUTO_INCREMENT,
+    PaymentID INT PRIMARY KEY AUTO_INCREMENT,
     BookingID INT NOT NULL,
     PayMethodID INT NOT NULL,
     PaymentDate DATE NOT NULL,
