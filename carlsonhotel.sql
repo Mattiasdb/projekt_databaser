@@ -1,9 +1,8 @@
 /*Databasen är skapad av Henrik Karlsson och Mattias Karlsson*/
-
 /*Skapar databasen Hotell*/
 CREATE DATABASE CarlsonHotel;
 USE CarlsonHotel;
-/*
+/*bookingservice
 Skapar tabellen Guest
 */
 CREATE TABLE Guest (
@@ -92,7 +91,7 @@ CREATE TABLE Payment (
      FOREIGN KEY (ServiceID) REFERENCES Service(ServiceID)
      );
  /*
-Skapar tabellen BokingLogg
+Skapar tabellen BokingLog
 */
 CREATE TABLE BookingLog (
         LogID INT PRIMARY KEY AUTO_INCREMENT,
@@ -244,7 +243,7 @@ START TRANSACTION;  -- Börjar en transaktion
 INSERT INTO Booking (GuestID, RoomID, CheckinDate, CheckoutDate ) VALUES
 (4, 5, '2025-06-15', '2025-06-17');  -- Kund 4 bokar rumsnr 301
 
-COMMIT;  -- Spara ändringen permanent. OBS spara endast om ändringen är korrekt. Kan inte ångra om Comittat
+COMMIT;  -- Spara ändringen permanent. 
 
 ROLLBACK;  -- Ångra ändringen.
 /*
@@ -269,7 +268,7 @@ UPDATE Booking
 SET CheckinDate = '2025-05-17' 
 WHERE BookingID = 8;
 
-COMMIT;  -- Spara ändringen permanent. OBS spara endast om ändringen är korrekt. Kan inte ångra om Comittat
+COMMIT;  -- Spara ändringen permanent.
 
 ROLLBACK;  -- Ångra ändringen.
 
@@ -308,11 +307,19 @@ Anropa proceduren ankomstlista
 */
 CALL GetBookingsByDate('2025-10-07');
 /*
+Skapar index för ankomstlista
+*/
+CREATE INDEX idx_checkin_date ON Booking(CheckinDate);
+/*
+/* Visar Indexet
+*/
+SHOW INDEX FROM Booking;
+/*
 Skapa användare och tilldela rättigheter
 Skapar användaren Anna som bara kan logga in från den lokala datorn. Lösenordet är 'carlson'
 Ger Anna rätt att: Läsa (SELECT), Lägga till (INSERT), Ändra (UPDATE), Ta bort (DELETE) i
 alla tabeller i databasen CarlsonHotel
-Ger Anna rätt att köra lagrade procedurer och funktioner i databasen.
+(EXECUTE) Ger Anna rätt att köra procedurer och funktioner i databasen.
 */
 CREATE USER 'Anna'@'localhost' IDENTIFIED BY 'carlson'; 
 GRANT SELECT, INSERT, UPDATE, DELETE ON CarlsonHotel.* TO 'Anna'@'localhost';
